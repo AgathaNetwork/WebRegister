@@ -1,0 +1,8 @@
+port: 3000
+
+# 新增 MySQL 数据库配置
+db:
+  host: "localhost"
+  port: 3306
+  user: "your_username"
+  password: "your_password"

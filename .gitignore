@@ -1,0 +1,13 @@
+# 忽略 node_modules 目录
+node_modules/
+# config.yml
+.env
+logs/
+*.log
+dist/
+build/
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
