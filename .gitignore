@@ -1,6 +1,6 @@
 # 忽略 node_modules 目录
 node_modules/
-# config.yml
+config.yml
 .env
 logs/
 *.log
