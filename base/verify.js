@@ -62,7 +62,7 @@ class IDVerification {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             };
             
-            const returnUrl = `https://mc.agatha.org.cn/accounts/regflow.html?id=${name}`;
+            const returnUrl = `https://register.agatha.org.cn/id_complete.html?user=${name}`;
             const notifyUrl = `https://api-dingtalk.agatha.org.cn/regflow/mdcallback.php?user=${name}`;
             
             const livingPageStyle = encodeURIComponent(JSON.stringify({

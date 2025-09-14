@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const SqlManager = require('./base/SqlManager'); // 引入 SqlManager
 const MojangAuth = require('./base/mojang'); // 引入 MojangAuth
 const IDVerification = require('./base/verify'); // 引入 IDVerification
+const VerifyCheck = require('./base/verify_check');
 
 // 读取配置文件
 let config;

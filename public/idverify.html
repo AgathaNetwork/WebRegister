@@ -52,10 +52,12 @@
         
         <!-- QR Code Display Area -->
         <div class="row mt-4" id="qrCodeSection" style="display: none;">
-          <div class="col text-center">
+          <div class="col text-center" >
             <h4>请扫描或点击下方二维码完成实名认证</h4>
-            <canvas id="qrCode" class="d-flex justify-content-center"></canvas>
-            <p class="mt-3">扫描完成后请耐心等待页面跳转</p>
+            <div class="d-flex justify-content-center">
+              <canvas id="qrCode" class="d-flex justify-content-center"></canvas>
+            </div>
+            <p class="mt-3">完成后请耐心等待页面跳转</p>
           </div>
         </div>
     </div>
@@ -87,7 +89,7 @@
       
       // 每秒轮询一次认证状态
       setInterval(checkVerificationStatus, 1000);
-      
+
       document.getElementById('submitBtn').addEventListener('click', async function() {
         // 获取输入值
         const name = new URLSearchParams(window.location.search).get('id');
@@ -134,15 +136,18 @@
             alert('未找到您的注册流程，请先完成前置步骤');
             return;
           }
-          
-          if (data.status === 'error') {
-            alert('处理出错，请稍后重试');
+
+          if (data.code != "0000") {
+            alert(data.msg);
             return;
           }
           
           // 显示二维码
           const qrCodeSection = document.getElementById('qrCodeSection');
           const qrcodeDiv = document.getElementById('qrCode');
+          
+          // 清空之前的二维码
+          qrcodeDiv.innerHTML = '';
           
           // 生成新的二维码
           QRCode.toCanvas(qrcodeDiv, data.url, {
@@ -151,6 +156,12 @@
           }, function (error) {
             if (error) console.error(error);
           });
+          
+          // 添加点击事件监听器，使二维码可点击
+          qrcodeDiv.addEventListener('click', function() {
+            window.open(data.url, '_blank');
+          });
+          qrcodeDiv.style.cursor = 'pointer';
           
           // 显示二维码区域
           qrCodeSection.style.display = 'block';
