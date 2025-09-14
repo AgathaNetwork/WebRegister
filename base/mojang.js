@@ -32,7 +32,7 @@ class MojangAuth {
                 client_secret: 'UIp8Q~bO2huycYt6TJv1MAUn12oaTW8mYfkw8dq~',
                 code: req.body.code,
                 grant_type: 'authorization_code',
-                redirect_uri: 'http://localhost:3000/finish_mojang.html'
+                redirect_uri: 'https://register.agatha.org.cn/finish_mojang.html'
                 }), {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -46,7 +46,7 @@ class MojangAuth {
                 client_secret_length: 'UIp8Q~bO2huycYt6TJv1MAUn12oaTW8mYfkw8dq~'.length,
                 code_length: req.body.code?.length || 0,
                 grant_type: 'authorization_code',
-                redirect_uri: 'http://localhost:3000/finish_mojang.html'
+                redirect_uri: 'https://register.agatha.org.cn/finish_mojang.html'
                 });
                 console.log("CODE:" + JSON.stringify(req));
                 throw error;
