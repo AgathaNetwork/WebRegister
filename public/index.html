@@ -3,198 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agatha Bot</title>
+    <title>自助注册 | Agatha纯净生存</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- 删除: <link href="css/bicon.css" rel="stylesheet"> -->
     <script src="js/bootstrap.bundle.min.js"></script>
-    <style>
-        /* 自定义样式 */
-        .chat-container {
-            max-width: 100%; /* 修改为占满整个宽度 */
-            height: calc(100vh - 100px); /* 设置高度为总高度减去导航栏高度 */
-        }
-        .message {
-            text-align: left; /* 内容靠左对齐 */
-        }
-        #chat-messages {
-            height: calc(100vh - 250px); /* 设置高度为总高度减去导航栏和输入框的高度 */
-        }
-        /* 新增样式：移除输入框和按钮的圆角 */
-        .input-group {
-            border-radius: 0; /* 移除整体圆角 */
-        }
-        #user-input {
-            border-top-right-radius: 0; /* 移除输入框右侧圆角 */
-            border-bottom-right-radius: 0;
-        }
-        #send-button {
-            border-top-left-radius: 0; /* 移除按钮左侧圆角 */
-            border-bottom-left-radius: 0;
-            position: relative; /* 为加载图标定位 */
-        }
-    </style>
+
 </head>
 <body>
+    
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                Agatha Bot
+                自助注册
             </a>
         </div>
     </nav>
 
-    <div class="container mt-3">
-        
-    <a href="/accounts/functions.html" class="text-decoration-none">返回</a>
-        <div class="row justify-content-center">
-            <div class="col-md-12"> <!-- 修改列宽为 col-md-12 -->
-                <div class="card chat-container"> <!-- 添加自定义类 -->
-                    <div class="card-header">
-                        与Agatha Bot聊天
-                    </div>
-                    <div class="card-body">
-                        <div id="chat-messages" class="mb-3" style="overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
-                        <div class="input-group">
-                            <input type="text" id="user-input" class="form-control" placeholder="输入您的消息...">
-                            <button class="btn btn-primary" id="send-button">
-                                发送
-                                <!-- 删除: <i class="loading-icon bi bi-arrow-clockwise"></i> -->
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="container" style="margin-top:1rem" id="IndexContainer">
+        <div class="shadow-sm row">
+          <div class="col">
+              <div class="alert alert-primary" role="alert">
+      您一旦开始自助注册流程、登录服务器、使用OpenID、使用官方网站或使用任何通过钉钉提供的服务，即代表您同意以下法律文件。您可点击展开查看。（共三项）
+    </div>
         </div>
+        </div>
+        <div class="shadow-sm row" style="margin-top:1rem">
+            <div class="col-12 col-md">
+               <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              1. 《Agatha纯净生存服务条款》
+            </button>
+          </h2>
+        </div>
+    
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+              
+              
+              <ul>
+    <li>本服务条款系 Agatha纯净生存 (下称本平台) 与所有使用本平台所提供服务的主体 (下称用户) 针对本平台的使用订立的有效合约。用户在使用本平台提供的一切服务前，务必仔细阅读并理解透彻本声明。用户选择使用本平台即表示完全认可此条款及其可能随时更新的内容。</li>
+    <li>本平台保留随时修改服务条款的权利，用户在使用本平台提供的服务时，有必要对最新的服务条款进行仔细阅读和重新确认，当发生有关争议时，以最新的服务条款为准。</li>
+    </ul>
+            <br><h4>服务内容及使用须知</h4>
+            <ul>
+                <li>用户在使用本平台所提供服务时, 必须遵循本平台发布的服务器规则。</li>
+                <li>为了满足法律法规和监管规定的实名制要求，用户在进行注册时，本平台需要对用户进行实名核验。</li>
+                <li>本平台尊重并保护用户的合法权益，防止用户在本平台侵犯他人合法权益、违反有关法律法规。本平台将依据法律采取必要的措施防止发生前述各类行为或降低发生这类行为的可能性或者降低由此造成的损失及其后果。</li>
+                <li>对于因前述各类情形而产生的任何纠纷，将由权利受到侵害之人和侵权方依据有关法律通过适当的方式直接加以解决，本平台及其所有者不参与其中；对于因此类行为产生的各类纠纷之任何责任和后果，由相关责任方承担，本平台及其管理者不承担任何责任及后果。</li>
+                <li>用户充分理解并同意，本平台有权审查用户注册所提供的身份信息是否真实、有效，并应积极地采取技术与管理等合理措施保障用户账号的安全、有效。</li>
+                <li>用户有义务妥善保管其账号及密码，并正确、安全地使用其账号及密码。任何一方未尽上述义务导致账号密码遗失、账号被盗等情形而给用户和他人的民事权利造成损害的，应当承担由此产生的法律责任。</li>
+                <li>本平台的所有用户在平台内所进行的一切合理操作均为其个人行为，本平台不会对这些行为进行监督或干涉，也不对其行为承担任何责任。若其他用户的行为侵犯到用户的权益，请及时联系本平台进行处理。</li>
+                <li>若用户属于未成年人，在使用本平台的产品或服务前，应事先取得用户的法定监护人的同意并在家长或法定监护人的陪同下使用。</li>
+                <li>除本平台注明之服务条款外，其他一切因使用本平台而可能遭致的意外、疏忽、侵权及其造成的损失，本平台对其概不负责，也不承担任何法律责任。</li>
+                <li>用户未经本平台授权不得使用任何第三方软件、插件、外挂、系统等查看、获取本平台服务中所包含的存档相关信息、数据等内容，同时，应当严格遵守本平台网站上发布的robots.txt信息等相关行业规则。</li>
+            </ul>
+            <br><h4>知识产权保护</h4>
+            <ul>
+                <li>
+                    知识产权包括但不限于游戏整体、游戏内所包含的所有美术、音乐、文字作品和其他游戏构成要素、组成部分，以及游戏运行呈现的连续动态画面。
+                </li>
+                <li>本平台使用的后端程序Spigot或PaperMC为开源作品，本平台对其进行了法律允许范围内的二次修改。游戏客户端呈现的画面经Mojang AB开发的Minecraft : Java Edition渲染，知识产权归Mojang AB及其附属实体所有。</li>
+                <li>如存在可供用户自行制作、创作或上传相关内容的平台功能或服务的（以下称”UGC平台”，如Bilibili），针对用户使用UGC平台制作、创作、上传或发布的内容（以下称“UGC内容”），用户应确保其合法且不侵犯他人合法权益并应遵守在UGC平台上发布的相关规则（以下称“UGC平台规则”），且用户同意：如UGC内容含有本平台游戏内容（包括但不限于游戏整体、游戏内所包含的所有美术、音乐、文字作品和其他游戏构成要素、组成部分，以及游戏运行呈现的连续动态画面）及（或）本平台享有知识产权的其他内容的，则用户对UGC内容进行商业目的使用需要经本平台授权同意，并遵守相应的UGC平台规则。</li>
+                <li>本平台内容可能涉及第三方知识产权，而该等第三方对用户基于本条款在游戏中使用该等知识产权有要求的，本平台将以适当方式向用户告知该要求，用户应当一并遵守。</li>
+            </ul>
+            <br><h4>免责声明</h4>
+            <ul>
+                <li>本平台定期对服务器存档进行备份、维护服务器软硬件，届时可能会产生服务中断，本平台将尽可能事先通知用户，但因此类情况造成用户服务受到影响、损失，本平台不承担任何责任。</li>
+                <li>若发生用户违背本条款约定或违反法律、法规规定之情形，由用户自行承担一切法律、经济后果，本平台不承担任何责任。</li>
+                <li>在本条款期限内由不可抗力因素，即不可预见因素（或虽可预见，但其发生或后果不可控制、避免），包括但不限于气象灾害、火灾、地震、战争、罢工、网络攻击、运营商故障或应政府部门要求，非任何一方所能控制且使任何一方无法完全履行本条款的事件，所造成的任何形式的损失，本平台将不承担任何责任。</li>
+                <li>用户私下进行帐号交易或二次销售服务，本平台不承担任何责任。</li>
+                <li>用户在使用本平台时未按照文档及本平台工作人员说明进行操作，本平台不承担任何责任。</li>
+                <li>用户使用本平台服务时未设置妥善的安全策略，维护自身防火墙而造成的各类损失，本平台不承担任何责任。</li>
+    
+            </ul>
+            
+            <br><h4>管辖与法律适用</h4>
+            <ul>
+                <li>本条款签订地为中华人民共和国湖南省长沙市天心区。</li>
+                <li>本条款的成立、生效、履行、解释及纠纷解决，适用中华人民共和国大陆地区法律（不包括冲突法）。</li>
+                <li>用户和本平台之间因本条款发生任何纠纷或争议，首先应友好协商解决；协商不成的，用户同意将纠纷或争议提交至本条款签订地有管辖权的人民法院管辖。</li>
+                <li>本条款所有条款的标题仅为阅读方便，本身并无实际涵义，不能作为本条款涵义解释的依据。</li>
+                <li>本条款内容无论因何种原因部分无效，其余条款仍有效，对各方具有约束力。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              2. 《儿童隐私保护指引》
+            </button>
+          </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul><li>
+                《儿童隐私保护指引》（本政策）旨在帮助您和孩子（本政策中的“孩子”或“儿童”，是指不满十四周岁的未成年人）进一步了解Agatha纯净生存（我们）收集、使用、存储和共享您孩子个人信息的情况，以及您和您的孩子所享有的相关权利。
+            </li>
+            <li>我们可能会适时对本政策进行修订。当本政策的条款发生变更时，我们会在版本更新时以适当的方式向您提示变更后的指引。请您仔细阅读变更后的隐私保护指引内容，您的孩子继续使用我们的服务，即表示您同意我们按照更新后的隐私保护指引收集、处理或使用您孩子的个人信息。</li>
+            </ul>
+            <br><h4>我们收集的儿童个人信息</h4>
+            <ul><li>
+                在您的孩子使用我们的服务的过程中，我们仅会收集您同意我们收集的或您主动提供的有关您孩子的个人信息，以向您的孩子提供、优化我们的服务以及保障您孩子的账户安全。
+            </li>
+            <li>我们可能会收集的您孩子的个人信息的详情，请参见《Agatha纯净生存隐私保护指引》。</li>
+            <li>
+                目前，除了向第三方调研机构、互联网基础设施运营单位或教育单位提供游戏调研信息，以帮助我们改进游戏产品、提供相关服务以及达成教育单位之目的以外，我们不会主动向第三方提供您孩子的个人信息。
+            </li>
+            <li>若我们使用您孩子的个人信息，超出了与收集时所声称的目的及具有直接或合理关联的范围，我们将在使用您孩子的个人信息前，再次向您告知并征得您的单独同意。</li>
+            </ul>
+            
+            <br><h4>儿童个人信息的存储</h4>
+            <ul><li>我们按照法律法规规定，将在中华人民共和国境内收集到的您孩子的个人信息存储于中华人民共和国境内，并依法对这些信息进行严格保密。</li>
+            <li>一般情况下，我们只会在为实现服务目的所必需的时间内或法律法规规定的条件下存储您孩子的个人信息。超出法律法规或监管规定的期限后，我们会按照法律法规的要求对您孩子的个人信息进行删除或者匿名化处理。</li>
+            <li>我们在委托境外接收方存储您孩子个人信息前会根据法律规定取得您的单独同意并告知您有关个人信息跨境的详细规则。</li>
+            </ul>
+            
+            
+            
+            <br><h4>儿童个人信息的管理</h4>
+                <ul>
+                    <li>
+                        为了保障您孩子的信息安全，我们会在现有技术水平下采取合理必要的措施来保护孩子的信息，采取物理防护、安全技术、管理制度等措施来降低丢失、误用、非授权访问、披露和更改的风险，包括但不限于数据加密传输、防火墙和加密存储、物理访问控制以及信息访问授权控制。为此我们设置了安全程序保护您孩子的信息不会被未经授权的访问所窃取，所有的个人信息被加密储存并放置于经防火墙严格保护的内部系统。
+                    </li>
+                    <li>为了保障您孩子的信息安全，我们建立了专门的管理制度、流程和组织以保障信息的安全。例如，我们严格限制访问信息的人员范围，要求他们遵守保密义务，并进行审计。</li>
+                    <li>若发生儿童个人信息泄露等安全事件，我们会启动应急预案，阻止安全事件扩大，并及时以公告、推送通知或邮件等形式告知您和孩子安全事件的基本情况、我们即将或已经采取的处置措施和补救措施，以及我们对您的应对建议。如果难以实现逐一告知，我们将通过公告等方式发布警示。</li>
+                    <li>在您孩子使用我们产品或服务期间，我们可能会视产品具体情况为您和您孩子提供相应的操作设置，以便您可以查询、复制、更正、补充、删除或撤回您孩子的相关个人信息。</li>
+                    <li>除法律、行政法规另有规定或国家有权机关另有要求，为维护社会公共利益，为履行您/您孩子与我们签署的《Agatha纯净生存服务条款》内容所必需，或为保护您/您孩子及其他用户人身、财产安全披露您孩子的个人信息的情况以外，我们不会披露孩子的个人信息。</li>
+                </ul>
+                
+                
+            
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-header" id="headingThree">
+          <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              3. 《Agatha纯净生存隐私保护指引》
+            </button>
+          </h2>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul><li>《Agatha纯净生存隐私保护指引》（“本指引”）向您说明您在使用Agatha纯净生存（我们）的服务时，我们收集、使用、存储和共享个人信息的情况，以及您所享有的相关权利等事宜</li></ul>
+            <br><h4>我们收集和使用的个人信息</h4>
+            <ul><li>
+                当您注册或使用我们的服务时，我们会收集您的网络身份标识信息，用于标记您为我们的用户。您可以使用手机号码、钉钉或我们认可的其他账号（以下称“第三方账号”）注册和关联登录我们的服务。
+            </li>
+            <li>如果您使用第三方账号作为游戏账号关联登录我们的服务，我们会收集您使用的第三方账号涉及的唯一标识、昵称、头像，用于帮助您完成注册和登录，以及实现更好的社交体验。您可以在OpenID和钉钉“OA审批”功能中查看和管理以上信息授权情况。</li>
+            <li>为满足相关法律法规政策及相关主管部门的要求，您应提供真实身份信息进行账号注册和登录使用，我们将通过自助注册功能验证您的的真实身份信息。上述验证主要是将用户真实面部信息与公安权威数据平台数据源进行比对，如二者比对结果一致，即成功通过认证。如比对结果不符或用户拒绝验证，我们将拒绝用户的任何进一步操作。人脸识别的相关验证数据，在加密后仅用于与公安权威数据平台进行比对，我们不会对其留存。</li>
+            <li>当您使用我们的服务时，我们会收集您的游戏日志信息，例如登录日志、物品日志、操作信息、聊天记录等，以便您能够查询您的历史记录，同时用于游戏安全分析。为提升您的游戏体验，我们可能把前述信息同步至该游戏后续版本。</li>
+            <li>为保障您正常使用我们的服务，维护游戏基础功能的正常运行，优化游戏产品性能，提升您的游戏体验并保障您的账号安全，我们会收集您的设备名称、设备类型、系统版本、IP地址、设备识别符（如IMEI、IMSI、MAC地址、Android ID）、网络类型等信息。</li>
+            <li>当您在游戏中通过文字、图片、语音、视频及其他方式与其他玩家进行互动，我们可能会收集并保存您发送的上述信息内容用于过滤色情、暴力、政治、辱骂、恶意广告等不当内容，以此净化游戏环境，维护健康的上网环境。</li>
+            <li>我们会在您主动提供的情况下，收集您的手机号码，用于免密登录、通知发放和必要的联系。</li>
+            <li>根据相关法律法规及国家标准，以下情形中，我们可能会收集、使用您的相关个人信息无需征求您的授权同意：<ul><li>1) 为履行法定职责或者法定义务所必需；</li><li>2) 为应对突发公共卫生事件，或者紧急情况下为保护自然人的生命健康和财产安全所必需；</li>
+    <li>3) 为公共利益实施新闻报道、舆论监督等行为，在合理的范围内处理个人信息；</li><li>4) 根据法律法规在合理的范围内处理个人自行公开或者其他已经合法公开的个人信息；</li><li>5) 与刑事犯罪侦查、起诉、审判和执行判决等直接相关的；</li><li>6) 法律法规规定的其他情形。</li></ul></li>
+    
+    <li>
+        您有权通过向我们发送请求，获取您有关个人资料的副本。在技术可行的前提下，例如数据接口匹配，我们还可按您的要求，直接将您的个人信息副本传输给您指定的第三方。
+    </li></ul>
+    
+    
+    
+            <br><h4>我们与第三方共享的个人信息</h4>
+            <ul>
+                <li><b>第三方主体：钉钉科技有限公司</b><ul><li>使用目的：帮助用户实时通信、登录认证、操作OpenID</li><li>处理方式：采取加密方式传输和处理</li><li>涉及个人信息类型：用户标识信息（Session）、IP地址、用户组织编码、用户设备识别符</li></ul></li>
+            
+                <li><b>第三方主体：北京一砂信息技术有限公司</b><ul><li>使用目的：帮助用户通过我们的真实身份信息验证</li><li>处理方式：采取去标识化、加密方式传输和处理</li><li>涉及个人信息类型：用户标识信息（Session）、用户面部画面、IP地址、用户身份证件信息</li></ul></li>
+                
+                <li><b>第三方主体：中移互联网有限公司</b><ul><li>使用目的：识别用户的手机号码快速登录，以及查询、分析和风险控制</li><li>处理方式：采取加密方式传输和处理</li><li>涉及个人信息类型：网络类型、网络地址、运营商类型、本机号码信息、SIM卡状态、手机设备类型、手机操作系统、硬件厂商</li><li>隐私政策链接：https://wap.cmpassport.com/resources/html/contract.html</li></ul></li>
+                
+                <li><b>第三方主体：中国联合网络通信集团有限公司</b><ul><li>使用目的：识别用户的手机号码快速登录，以及查询、分析和风险控制</li><li>处理方式：采取加密方式传输和处理</li><li>涉及个人信息类型：网络类型、网络地址、运营商类型、本机手机号、手机设备类型、手机操作系统、硬件厂商</li><li>隐私政策链接：https://opencloud.wostore.cn/authz/resource/html/disclaimer.html</li></ul></li>
+                
+                <li><b>第三方主体：天翼数字生活科技有限公司</b><ul><li>使用目的：识别用户的手机号码快速登录，以及查询、分析和风险控制</li><li>处理方式：采取加密方式传输和处理</li><li>涉及个人信息类型：注册手机号码、本机号码、网络连接类型、网络状态信息、网络地址、运营商类型、手机设备类型、手机设备厂商、手机操作系统类型及版本</li><li>隐私政策链接：https://e.189.cn/sdk/agreement/detail.do</li></ul></li>
+                
+                <li><b>第三方主体：阿里巴巴云计算（北京）有限公司</b><ul><li>使用目的：号码认证、验证码发送</li><li>处理方式：采取加密方式传输和处理</li><li>涉及个人信息类型：手机号码、IP地址</li><li>隐私政策链接：https://terms.aliyun.com/legal-agreement/terms/suit_bu1_ali_cloud/suit_bu1_ali_cloud202112211045_86198.html</li></ul></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+          
+    </div>
     </div>
     
+    </div>
+
+    <div class="container" style="margin-top:1rem; margin-bottom:1rem">
+        <div class="shadow-sm row">
+          <div class="col" style="text-align: center;">
+              <a href="/mojang.html" class="btn btn-primary mt-2 mb-2" role="button" aria-pressed="true">我已阅读并同意以上条款</a>
+        </div>
+        </div>
+    
     <script>
-        // 读取 cookie
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-
-        // 校验 sess
-        async function validateSession() {
-            const sess = getCookie('sess');
-            if (!sess) {
-                window.location.href = 'https://mc.agatha.org.cn/accounts/';
-                return;
-            }
-
-            try {
-                const response = await fetch('/webllm/validate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ sess })
-                });
-                const data = await response.json();
-
-                if (data.status === 'pass_failed') {
-                    window.location.href = 'https://mc.agatha.org.cn/accounts/';
-                } else {
-                    const username = data.username || '用户';
-                    document.getElementById('user-input').placeholder = `以${username}的身份输入消息`;
-                }
-            } catch (error) {
-                console.error('Session validation failed:', error);
-                window.location.href = 'https://mc.agatha.org.cn/accounts/';
-            }
-        }
-
-        // 页面加载时校验 sess
-        document.addEventListener('DOMContentLoaded', validateSession);
-
-        document.getElementById('send-button').addEventListener('click', function() {
-            const userInput = document.getElementById('user-input').value;
-            if (userInput.trim() !== '') {
-                const sendButton = document.getElementById('send-button');
-                
-                // 显示加载状态并禁用按钮
-                sendButton.textContent = '生成中...'; // 修改为显示文字“生成中...”
-                sendButton.disabled = true;
-
-                appendMessage('您', userInput);
-                document.getElementById('user-input').value = '';
-                sendChatMessage(userInput).finally(() => {
-                    // 恢复按钮状态
-                    sendButton.textContent = '发送'; // 恢复按钮文字
-                    sendButton.disabled = false;
-                });
-            }
-        });
-
-        function appendMessage(sender, message) {
-            const chatMessages = document.getElementById('chat-messages');
-            const messageElement = document.createElement('div');
-            messageElement.className = 'message'; // 添加自定义类
-            messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
-            chatMessages.appendChild(messageElement);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // 发送聊天消息并接收流式响应
-        async function sendChatMessage(message) {
-            const sess = getCookie('sess'); // 获取 sess 参数
-            if (!sess) {
-                console.error('Session parameter is missing');
-                return;
-            }
-
-            const response = await fetch('/webllm/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ message, sess }) // 包含 sess 参数
-            });
-
-            if (response.ok) {
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder('utf-8');
-                let buffer = '';
-                let aggregatedMessage = ''; // 新增变量，用于存储流式响应内容
-
-                while (true) {
-                    console.log("Receiving data");
-                    const { done, value } = await reader.read();
-                    if (done) break;
-
-                    buffer += decoder.decode(value, { stream: true });
-
-                    const lines = buffer.split('\n');
-                    buffer = lines.pop();
-
-                    for (const line of lines) {
-                        
-                        console.log('Received chunk:', line);
-                        if (line.startsWith('data:')) {
-                            const data = line.substring(6);
-                            try {
-                                const chunk = JSON.parse(data);
-                                aggregatedMessage += chunk.output.text; // 拼接流式响应内容
-
-                                // 更新聊天框中的最后一条消息
-                                const chatMessages = document.getElementById('chat-messages');
-                                const lastMessage = chatMessages.lastElementChild;
-                                if (lastMessage && lastMessage.textContent.includes('Agatha Bot:')) {
-                                    lastMessage.innerHTML = `<strong>Agatha Bot:</strong> ${aggregatedMessage}`;
-                                } else {
-                                    appendMessage('Agatha Bot', aggregatedMessage);
-                                }
-                            } catch (error) {
-                                console.error('Error parsing chunk:', error);
-                            }
-                        }
-                    }
-                }
-            } else {
-                console.error('Error sending chat message:', response.statusText);
-            }
-        }
     </script>
 </body>
 </html>

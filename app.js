@@ -18,10 +18,6 @@ async function loadConfig() {
       throw new Error('Invalid configuration format');
     }
 
-    // 确保 workspace_id 存在
-    if (!config.workspace_id) {
-      throw new Error('Missing workspace_id in configuration file');
-    }
   } catch (error) {
     console.error('Failed to load configuration:', error.message);
     process.exit(1); // 如果配置加载失败，终止程序
@@ -37,27 +33,6 @@ async function initSqlConnection() {
   } catch (error) {
     console.error('Failed to initialize SQL connection:', error.message);
     process.exit(1); // 如果数据库连接初始化失败，终止程序
-  }
-}
-
-// 新增函数：根据 name 查询 keyid
-async function getKeyIdByName(name) {
-  try {
-    if (!sqlManager || !sqlManager.connection) {
-      throw new Error('Database connection is not initialized.');
-    }
-
-    const query = 'SELECT keyid FROM aimemory WHERE name = ?';
-    const [rows] = await sqlManager.query(query, [name]);
-    console.log('Query result:', rows);
-    if (rows && rows.keyid) { // 修改为直接检查 rows 是否存在且包含 keyid 属性
-      return rows.keyid;
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.error('Error querying keyid:', error.message);
-    throw error;
   }
 }
 
@@ -93,138 +68,120 @@ const axios = require('axios');
   // 静态文件服务
   app.use(express.static(path.join(__dirname, 'public')));
 
-  // 定义 /validate API
-  app.post('/validate', async (req, res) => {
-    const sess = req.body.sess;
-    if (!sess) {
-        return res.status(400).json({ status: 'pass_failed', message: 'Session parameter is missing' });
-    }
+  // 允许public/finish_mojang.html接受POST请求
+  app.post('/finish_mojang.html', async (req, res) => {
 
     try {
-        const result = await safeQuery('SELECT username, status, expiry FROM sessions WHERE session = ?', [sess]);
-        if (result.length === 0 || result[0].status !== 1) {
-            return res.json({ status: 'pass_failed' });
+      // Step 1: Exchange authorization code for access token
+      const tokenResponse = await axios.post('https://login.live.com/oauth20_token.srf', 
+        new URLSearchParams({
+          client_id: 'b5f2d80e-6259-478a-83b0-42321c9d1c7a',
+          client_secret: 'UIp8Q~bO2huycYt6TJv1MAUn12oaTW8mYfkw8dq~',
+          code: req.body.code,
+          grant_type: 'authorization_code',
+          redirect_uri: 'https://register.agatha.org.cn/finish_mojang.html'
+        }), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
         }
-
-        // 检查 expiry 是否大于当前时间戳
-        const currentTime = Math.floor(Date.now() / 1000); // 当前时间戳（秒）
-        if (result[0].expiry <= currentTime) {
-            return res.json({ status: 'pass_failed', message: 'Session has expired' });
+      );
+      
+      const accessToken = tokenResponse.data.access_token;
+      
+      // Step 2: Authenticate with Xbox Live
+      const xboxAuthResponse = await axios.post('https://user.auth.xboxlive.com/user/authenticate', {
+        Properties: {
+          AuthMethod: 'RPS',
+          SiteName: 'user.auth.xboxlive.com',
+          RpsTicket: `d=${accessToken}`
+        },
+        RelyingParty: 'http://auth.xboxlive.com',
+        TokenType: 'JWT'
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
         }
-
-        return res.json({ username: result[0].username });
+      });
+      
+      const xboxToken = xboxAuthResponse.data.Token;
+      const uhs = xboxAuthResponse.data.DisplayClaims.xui[0].uhs;
+      
+      // Step 3: Authorize with XSTS
+      const xstsResponse = await axios.post('https://xsts.auth.xboxlive.com/xsts/authorize', {
+        Properties: {
+          SandboxId: 'RETAIL',
+          UserTokens: [xboxToken]
+        },
+        RelyingParty: 'rp://api.minecraftservices.com/',
+        TokenType: 'JWT'
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      const xstsToken = xstsResponse.data.Token;
+      
+      // Step 4: Authenticate with Minecraft
+      const minecraftAuthResponse = await axios.post('https://api.minecraftservices.com/authentication/login_with_xbox', {
+        identityToken: `XBL3.0 x=${uhs};${xstsToken}`,
+        ensureLegacyEnabled: true
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      const minecraftAccessToken = minecraftAuthResponse.data.access_token;
+      
+      // Step 5: Get Minecraft profile
+      const profileResponse = await axios.get('https://api.minecraftservices.com/minecraft/profile', {
+        headers: {
+          Authorization: `Bearer ${minecraftAccessToken}`
+        }
+      });
+      
+      const minecraftName = profileResponse.data.name;
+      const minecraftUUID = profileResponse.data.id;
+      
+      // Check if user already exists in database
+      const existingUser = await safeQuery('SELECT * FROM authme WHERE realname = ?', [minecraftName]);
+      
+      // Check registration flow status
+      const regFlow = await safeQuery('SELECT status FROM regflow WHERE name = ?', [minecraftName]);
+      
+      let status = 0;
+      if (existingUser.length > 0) {
+        status += 1;
+      }
+      
+      if (regFlow.length > 0) {
+        if (regFlow[0].status == '1') {
+          status += 1;
+        }
+        if (regFlow[0].status == '0') {
+          return res.send('<h2>您此前创建过一个注册流程，请直接点击确认。</h2>');
+        }
+      }
+      
+      // If no existing user and no active registration flow
+      if (status === 0 && minecraftName) {
+        // Insert into registration flow
+        await safeQuery(
+          'INSERT INTO regflow (name, 1_msverify, 2_idverify_name, 2_idverify_id, 3_smsverify, status) VALUES (?, ?, ?, ?, ?, ?)',
+          [minecraftName, '1', null, null, null, 0]
+        );
+        
+        return res.send('<h2>您已验证正版账号，现在可以关闭此页面，并点击卡片上的“已完成”。</h2>');
+      } else {
+        return res.send('<h2>注册失败：请确认该Microsoft账号拥有Minecraft国际版，且从未注册过Agatha，如未解决，请通过钉钉联系管理员。您现在可以关闭此页面。</h2><br><br><h2>如果您使用新购买的账号游玩，请先登录一次官方启动器。微软在这种情况下有概率抽风。</h2>');
+      }
     } catch (error) {
-        console.error('Error validating session:', error.message);
-        return res.status(500).json({ status: 'pass_failed', message: 'Internal server error' });
+      console.error('Error in Mojang authentication flow:', error);
+      return res.status(500).send('<h2>验证过程中发生错误，请稍后重试或联系管理员。</h2>');
     }
   });
-
-  // 修改 /chat API 来处理用户输入的消息
-  app.post('/chat', async (req, res) => {
-    const { message, sess } = req.body; // 新增 sess 参数
-    if (!message) {
-      return res.status(400).json({ error: 'Message is required' });
-    }
-
-    // 验证 sess 参数
-    if (!sess) {
-        return res.status(400).json({ error: 'Session parameter is required' });
-    }
-
-    try {
-        // 校验 sess
-        const result = await safeQuery('SELECT username, status, expiry FROM sessions WHERE session = ?', [sess]);
-        if (result.length === 0 || result[0].status !== 1) {
-            return res.status(401).json({ error: 'Invalid session' });
-        }
-
-        // 检查 expiry 是否大于当前时间戳
-        const currentTime = Math.floor(Date.now() / 1000); // 当前时间戳（秒）
-        if (result[0].expiry <= currentTime) {
-            return res.status(401).json({ error: 'Session has expired' });
-        }
-
-        // 获取玩家名
-        const username = result[0].username;
-        console.log(`[Debug] Player Name: ${username}`); // 输出玩家名到控制台
-
-        // 使用预制的函数获取与玩家相关的 memory
-        const memoryKeyId = await getKeyIdByName(username);
-        if (memoryKeyId) {
-          console.log(`[Debug] Memory Key ID for ${username}:`, memoryKeyId); // 输出 memory key id 到控制台
-        } else {
-          console.log(`[Debug] No memory found for ${username}`);
-        }
-
-        const apiKey = config.dashscope_key;
-        const appId = config.app_id;
-
-        // 构造请求体
-        const requestBody = {
-            input: {
-                prompt: message
-            },
-            parameters: {
-                incremental_output: true
-            },
-            debug: {}
-        };
-
-        // 如果存在 memoryKeyId，则添加 memory_id 参数
-        if (memoryKeyId) {
-            requestBody.input.memory_id = memoryKeyId;
-        }
-
-        // 发起 HTTP 请求
-        const response = await axios.post(`https://dashscope.aliyuncs.com/api/v1/apps/${appId}/completion`, requestBody, {
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json',
-                'X-DashScope-SSE': 'enable'
-            },
-            responseType: 'stream' // 用于处理流式响应
-        });
-
-        if (response.status !== 200) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // 设置响应头
-        res.setHeader('Content-Type', 'text/event-stream');
-        res.setHeader('Cache-Control', 'no-cache');
-        res.setHeader('Connection', 'keep-alive');
-
-        // 处理流式响应
-        response.data.on('data', (chunk) => {
-            const data = chunk.toString();
-            const lines = data.split('\n');
-            for (const line of lines) {
-                if (line.startsWith('data:')) {
-                    const eventData = line.substring(5);
-                    try {
-                        const parsedData = JSON.parse(eventData);
-                        res.write(`data: ${JSON.stringify(parsedData)}\n`);
-                    } catch (error) {
-                        console.error('Error parsing chunk:', error);
-                    }
-                }
-            }
-        });
-
-        response.data.on('end', () => {
-            res.end();
-        });
-
-        response.data.on('error', (error) => {
-            console.error('Error processing chat:', error.message);
-            res.status(500).json({ error: 'Internal server error' });
-        });
-    } catch (error) {
-        console.error('Error processing chat:', error.message);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
   // 启动服务器
   app.listen(port, () => {
     console.log(`http://localhost:${port}`);

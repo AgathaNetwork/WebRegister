@@ -11,3 +11,4 @@ build/
 *.iml
 .DS_Store
 Thumbs.db
+config.yml
